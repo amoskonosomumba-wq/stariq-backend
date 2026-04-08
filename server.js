@@ -1,6 +1,9 @@
 require('dotenv').config(); // Load environment variables from .env file
 
 const express = require('express');
+const cors = require('cors');
+app.use(cors()); // allow all origins (for testing)
+
 const app = express();
 
 app.use(express.json());
