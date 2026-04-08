@@ -1,12 +1,14 @@
 require('dotenv').config(); // Load environment variables from .env file
 
-import express, { json } from 'express';
+const express = require('express');
 const app = express();
 
-// middleware (important for later)
-app.use(json());
+app.use(express.json());
 
-import { createTransport } from 'nodemailer';
+// middleware (important for later)
+app.use(express.json());
+
+const nodemailer = require('nodemailer');
 
 // In-memory storage for reset codes
 const resetCodes = {}; // { email: code }
@@ -48,11 +50,11 @@ app.post('/request-reset', async (req, res) => {
   resetCodes[email] = code; // save code in memory
 
   // Configure transporter
-  let transporter = createTransport({
+  let transporter = nodemailer.createTransport({
     service: 'gmail', // or outlook, etc.
     auth: {
       user: process.env.EMAIL_USER, // use environment variable for security
-      pass: process.env.EMAIL_PASSWORD // use environment variable for security 
+      pass: process.env.EMAIL_PASS // use environment variable for security 
     }
   });
 
